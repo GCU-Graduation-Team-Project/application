@@ -14,10 +14,11 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.myapplication.databinding.LoginPageBinding;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
     private LoginPageBinding binding;
-    private FirebaseAuth firebaseAuth;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
 
-        firebaseAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
         binding.loginButton.setOnClickListener(v -> {
             String email = binding.emailText.getText().toString().trim();
@@ -39,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
                 return;
             }
 
-            firebaseAuth.signInWithEmailAndPassword(email, password)
+            mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(LoginActivity.this, task -> {
                         if (task.isSuccessful()) {
                             Intent intent = new Intent(this, MainActivity.class);

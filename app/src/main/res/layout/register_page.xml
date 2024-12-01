@@ -17,11 +17,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/idInputLayout"
+        android:id="@+id/nameInputLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:hint="아이디"
-        app:helperText="아이디를 입력해 주세요"
+        android:hint="이름"
+        app:helperText="이름을 입력해 주세요"
         app:helperTextEnabled="true"
         app:layout_constraintBottom_toTopOf="@+id/horizon2"
         app:layout_constraintEnd_toStartOf="@id/vertical2"
@@ -29,7 +29,7 @@
         app:layout_constraintTop_toBottomOf="@+id/horizon1">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/idInput"
+            android:id="@+id/nameInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />
