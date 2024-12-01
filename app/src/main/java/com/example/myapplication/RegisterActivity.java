@@ -85,7 +85,6 @@ public class RegisterActivity extends AppCompatActivity {
         String password = binding.passwordInput.getText().toString().trim();
         String password2 = binding.passwordInput2.getText().toString().trim();
 
-        Log.d("PasswordCheck", "Password1: " + password + ", Password2: " + password2);
 
         if (name.isEmpty()) {
             binding.nameInputLayout.setHelperText("사용할 수 없는 이름 입니다");
@@ -101,10 +100,6 @@ public class RegisterActivity extends AppCompatActivity {
             binding.emailInputLayout.setHelperText("사용할 수 없는 이메일 입니다");
             binding.emailInputLayout.setHelperTextEnabled(true);
             return;
-        }
-        else{
-            binding.emailInputLayout.setHelperText("사용할 수 있는 이메일 입니다");
-            binding.emailInputLayout.setHelperTextEnabled(true);
         }
 
         if (password.isEmpty()) {
@@ -129,6 +124,9 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
 
+                            binding.emailInputLayout.setHelperText("사용할 수 있는 이메일 입니다");
+                            binding.emailInputLayout.setHelperTextEnabled(true);
+
                             FirebaseUser user = mAuth.getCurrentUser();
                             db =  FirebaseFirestore.getInstance();
                             String userId = user.getUid();
@@ -142,23 +140,13 @@ public class RegisterActivity extends AppCompatActivity {
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                        @Override
                                        public void onComplete(@NonNull Task<Void> task) {
-                                           Toast.makeText(RegisterActivity.this, "회원가입 및 데이터 저장 성공!", Toast.LENGTH_SHORT).show();
-
                                            Intent intent = new Intent(RegisterActivity.this, RegisterSuccess.class);
                                            startActivity(intent);
                                            overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
-
                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(RegisterActivity.this, "데이터 저장 실패: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                        }
                                     });
-
                         } else {
-                            Toast.makeText(RegisterActivity.this, "회원가입 실패: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            binding.emailInputLayout.setHelperText("중복된 이메일입니다");
                         }
                     }
                 });
