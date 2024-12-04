@@ -15,6 +15,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.myapplication.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -101,6 +103,8 @@ public class MainActivity extends AppCompatActivity {
         };
 
         getOnBackPressedDispatcher().addCallback(exit_callback);
+
+
 
 
     }

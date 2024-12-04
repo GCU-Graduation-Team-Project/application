@@ -24,11 +24,17 @@ public class SearchFragment5 extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = SearchFragment5Binding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         binding.progressBar.setProgress(100);
 
         binding.buttonNext.setOnClickListener(v -> {
-            Fragment nextFragment = new SearchFragment6();
+            Fragment nextFragment = new SearchFragment2();
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
 
             transaction.setCustomAnimations(
@@ -41,6 +47,7 @@ public class SearchFragment5 extends Fragment {
             transaction.replace(R.id.fragment_container, nextFragment);
             transaction.commit();
         });
+
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
@@ -73,7 +80,7 @@ public class SearchFragment5 extends Fragment {
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
-        return view;
+
     }
 
     @Override

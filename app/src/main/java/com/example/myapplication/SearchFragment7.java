@@ -20,6 +20,12 @@ public class SearchFragment7 extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = SearchFragment7Binding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         binding.buttonNext.setOnClickListener(v -> {
             Fragment nextFragment = new SearchFragment();
@@ -35,8 +41,6 @@ public class SearchFragment7 extends Fragment {
             transaction.replace(R.id.fragment_container, nextFragment);
             transaction.commit();
         });
-
-        return view;
     }
 
     @Override

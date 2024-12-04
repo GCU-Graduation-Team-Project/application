@@ -97,7 +97,7 @@
                 style="@style/Widget.Material3.Chip.Suggestion"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:text="연구개발"
+                android:text="연구개발·설계"
                 app:chipBackgroundColor="@color/chip_background_color" />
 
             <com.google.android.material.chip.Chip
@@ -113,6 +113,37 @@
                 android:layout_height="70dp"
                 android:text="디자인"
                 app:chipBackgroundColor="@color/chip_background_color" />
+
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.Material3.Chip.Suggestion"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:text="건설"
+                app:chipBackgroundColor="@color/chip_background_color" />
+
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.Material3.Chip.Suggestion"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:text="의료"
+                app:chipBackgroundColor="@color/chip_background_color" />
+
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.Material3.Chip.Suggestion"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:text="미디어·문화·스포츠"
+                app:chipBackgroundColor="@color/chip_background_color" />
+
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.Material3.Chip.Suggestion"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:text="공공·복지"
+                app:chipBackgroundColor="@color/chip_background_color" />
+
+
+
 
         </com.google.android.material.chip.ChipGroup>
     </ScrollView>

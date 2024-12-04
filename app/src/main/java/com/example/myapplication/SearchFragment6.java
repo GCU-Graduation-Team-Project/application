@@ -25,9 +25,14 @@ public class SearchFragment6 extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = SearchFragment6Binding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         binding.progressBar.setProgress(100);
-
 
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
 
@@ -47,7 +52,6 @@ public class SearchFragment6 extends Fragment {
                 transaction.commit();
             }
         }, 1000);
-
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
@@ -80,9 +84,8 @@ public class SearchFragment6 extends Fragment {
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
-        return view;
-    }
 
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();

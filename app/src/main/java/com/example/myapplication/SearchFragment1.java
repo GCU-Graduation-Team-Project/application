@@ -24,6 +24,13 @@ public class SearchFragment1 extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = SearchFragment1Binding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        return view;
+
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         binding.buttonNext.setOnClickListener(v -> {
             Fragment nextFragment = new SearchFragment2();
@@ -72,7 +79,6 @@ public class SearchFragment1 extends Fragment {
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
-        return view;
 
     }
 

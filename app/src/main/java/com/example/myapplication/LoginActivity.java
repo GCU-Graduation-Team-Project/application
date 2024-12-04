@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Toast;
@@ -43,6 +44,15 @@ public class LoginActivity extends AppCompatActivity {
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(LoginActivity.this, task -> {
                         if (task.isSuccessful()) {
+
+                            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                            String userId = currentUser.getUid();
+                            SharedPreferences sharedPreferences = getSharedPreferences("UserData", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("userId", userId);
+                            editor.apply();
+
+
                             Intent intent = new Intent(this, MainActivity.class);
                             startActivity(intent);
                         } else {

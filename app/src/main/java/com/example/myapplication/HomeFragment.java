@@ -1,6 +1,10 @@
 package com.example.myapplication;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +13,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.myapplication.databinding.HomeFragmentBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,44 +33,35 @@ public class HomeFragment extends Fragment {
 
     private HomeFragmentBinding binding;
     String name;
-
+    private SharedViewModel SharedViewModel;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         binding = HomeFragmentBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        return view;
+    }
 
-        FirebaseFirestore database = FirebaseFirestore.getInstance();
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        String userId = sharedPreferences.getString("userId", null);
 
 
-        String userID = currentUser.getUid();
+        SharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
+        // ViewModel을 통해 데이터 로드
+        SharedViewModel.loadUserAccount(userId);
 
-        DocumentReference docRef = database.collection("Users").document(userID);
-
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        name = document.getString("name");
-                        binding.nameView.setText(name);
-                    } else {
-                        Toast.makeText(getActivity(), "해당 문서가 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(getActivity(), "오류 발생: " + task.getException(), Toast.LENGTH_SHORT).show();
-
-                }
+        // 데이터 변경 관찰 및 UI 업데이트
+        SharedViewModel.getUserAccount().observe(getViewLifecycleOwner(), account -> {
+            if (account != null) {
+                binding.nameView.setText(account.getName());
             }
         });
 
-
-        return view;
     }
 
     @Override
