@@ -134,6 +134,7 @@ public class RegisterActivity extends AppCompatActivity {
                             UserAccount userAccount = new UserAccount();
                             userAccount.setName(name);
                             userAccount.setId(userId);
+                            userAccount.setEmail(email);
 
                             db.collection("Users").document(userId)
                                     .set(userAccount)

@@ -34,6 +34,8 @@ public class HomeFragment extends Fragment {
     private HomeFragmentBinding binding;
     String name;
     private SharedViewModel SharedViewModel;
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -51,11 +53,8 @@ public class HomeFragment extends Fragment {
 
 
         SharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-
-        // ViewModel을 통해 데이터 로드
         SharedViewModel.loadUserAccount(userId);
 
-        // 데이터 변경 관찰 및 UI 업데이트
         SharedViewModel.getUserAccount().observe(getViewLifecycleOwner(), account -> {
             if (account != null) {
                 binding.nameView.setText(account.getName());

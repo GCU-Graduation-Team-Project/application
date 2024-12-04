@@ -48,6 +48,7 @@
 
 
     <com.google.android.material.chip.ChipGroup
+        android:id="@+id/ChipGroupId"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
@@ -59,6 +60,7 @@
         app:singleSelection="true">
 
         <com.google.android.material.chip.Chip
+            android:id="@+id/대면_chip"
             style="@style/Widget.Material3.Chip.Suggestion"
             android:layout_width="match_parent"
             android:layout_height="70dp"
@@ -69,6 +71,7 @@
             app:closeIconEnabled="false" />
 
         <com.google.android.material.chip.Chip
+            android:id="@+id/비대면_chip"
             style="@style/Widget.Material3.Chip.Suggestion"
             android:layout_width="match_parent"
             android:layout_height="70dp"

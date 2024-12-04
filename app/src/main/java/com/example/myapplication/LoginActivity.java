@@ -47,14 +47,17 @@ public class LoginActivity extends AppCompatActivity {
 
                             FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
                             String userId = currentUser.getUid();
+
                             SharedPreferences sharedPreferences = getSharedPreferences("UserData", MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
+
                             editor.putString("userId", userId);
                             editor.apply();
 
 
                             Intent intent = new Intent(this, MainActivity.class);
                             startActivity(intent);
+
                         } else {
                             Toast.makeText(LoginActivity.this, "로그인 실패 : " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }

@@ -57,20 +57,21 @@
         app:layout_constraintTop_toBottomOf="@id/horizon2">
 
         <TextView
-
+            android:id="@+id/nameView"
             android:layout_width="300dp"
             android:layout_height="30dp"
             android:gravity="center"
-            android:text="박준혁"
+            android:text="test"
             android:textSize="20dp"
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/emailView"
             android:layout_width="300dp"
             android:layout_height="40dp"
             android:layout_marginTop="-10dp"
             android:gravity="center"
-            android:text="phpp0825@gachon.ac.kr"
+            android:text="test@test.com"
             android:textColor="#71727A"
             android:textSize="15dp" />
 

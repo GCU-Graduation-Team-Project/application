@@ -59,12 +59,14 @@
         app:layout_constraintTop_toBottomOf="@id/horizon3">
 
         <com.google.android.material.chip.ChipGroup
+            android:id="@+id/ChipGroupId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="35dp"
             app:singleSelection="true">
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/경영_사무직_chip"
                 style="@style/Widget.Material3.Chip.Suggestion"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
@@ -72,6 +74,7 @@
                 app:chipBackgroundColor="@color/chip_background_color" />
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/마케팅_광고_홍보_chip"
                 style="@style/Widget.Material3.Chip.Suggestion"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
@@ -80,6 +83,7 @@
 
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/영업_고객관리_chip"
                 style="@style/Widget.Material3.Chip.Suggestion"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
@@ -87,6 +91,7 @@
                 app:chipBackgroundColor="@color/chip_background_color" />
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/IT_SW_개발_chip"
                 style="@style/Widget.Material3.Chip.Suggestion"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
@@ -94,6 +99,7 @@
                 app:chipBackgroundColor="@color/chip_background_color" />
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/연구개발_설계_chip"
                 style="@style/Widget.Material3.Chip.Suggestion"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
@@ -101,6 +107,7 @@
                 app:chipBackgroundColor="@color/chip_background_color" />
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/생산_제조_품질관리_chip"
                 style="@style/Widget.Material3.Chip.Suggestion"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
@@ -108,6 +115,7 @@
                 app:chipBackgroundColor="@color/chip_background_color" />
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/디자인_chip"
                 style="@style/Widget.Material3.Chip.Suggestion"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
@@ -115,6 +123,7 @@
                 app:chipBackgroundColor="@color/chip_background_color" />
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/건설_chip"
                 style="@style/Widget.Material3.Chip.Suggestion"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
@@ -122,6 +131,7 @@
                 app:chipBackgroundColor="@color/chip_background_color" />
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/의료_chip"
                 style="@style/Widget.Material3.Chip.Suggestion"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
@@ -129,6 +139,7 @@
                 app:chipBackgroundColor="@color/chip_background_color" />
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/미디어_문화_스포츠_chip"
                 style="@style/Widget.Material3.Chip.Suggestion"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
@@ -136,6 +147,7 @@
                 app:chipBackgroundColor="@color/chip_background_color" />
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/공공_복지_chip"
                 style="@style/Widget.Material3.Chip.Suggestion"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"

@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,12 +14,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.myapplication.databinding.SearchFragment1Binding;
 
 public class SearchFragment1 extends Fragment {
     private SearchFragment1Binding binding;
     private OnBackPressedCallback main_callback;
+    private SharedViewModel SharedViewModel;
 
     @Nullable
     @Override
@@ -31,6 +35,15 @@ public class SearchFragment1 extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        String userId = sharedPreferences.getString("userId", null);
+
+        SharedViewModel = new ViewModelProvider(requireActivity()).get(com.example.myapplication.SharedViewModel.class);
+        SharedViewModel.loadUserAccount(userId);
+
+        int selectedChipId = binding.ChipGroupId.getCheckedChipId();
+
 
         binding.buttonNext.setOnClickListener(v -> {
             Fragment nextFragment = new SearchFragment2();
