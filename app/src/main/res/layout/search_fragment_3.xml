@@ -57,7 +57,7 @@
         app:layout_constraintTop_toBottomOf="@id/horizon3">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/역량_요소_text"
+            android:id="@+id/question_3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Edit Text"

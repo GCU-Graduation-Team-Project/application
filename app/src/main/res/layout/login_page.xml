@@ -17,13 +17,13 @@
         app:layout_constraintTop_toBottomOf="@id/horizon1" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/id_layout"
+        android:id="@+id/email_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:hint="이메일"
-        app:helperText="이메일이 존재하지 않습니다"
         app:layout_constraintBottom_toTopOf="@id/password_layout"
         app:layout_constraintEnd_toStartOf="@id/vertical2"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@id/vertical1"
         app:layout_constraintTop_toBottomOf="@+id/horizon2">
 
@@ -41,12 +41,10 @@
         android:layout_height="0dp"
         android:hint="비밀번호"
         app:endIconMode="password_toggle"
-        app:helperText="비밀번호가 존재하지 않습니다"
-        app:helperTextEnabled="true"
         app:layout_constraintBottom_toTopOf="@+id/horizon4"
         app:layout_constraintEnd_toStartOf="@id/vertical2"
         app:layout_constraintStart_toEndOf="@id/vertical1"
-        app:layout_constraintTop_toBottomOf="@id/id_layout">
+        app:layout_constraintTop_toBottomOf="@id/email_layout">
 
 
         <com.google.android.material.textfield.TextInputEditText
@@ -186,7 +184,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.52" />
+        app:layout_constraintGuide_percent="0.43" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/horizon5"

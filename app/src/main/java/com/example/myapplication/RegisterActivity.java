@@ -86,34 +86,52 @@ public class RegisterActivity extends AppCompatActivity {
         String password2 = binding.passwordInput2.getText().toString().trim();
 
 
+        FirebaseUser user = mAuth.getCurrentUser();
+        db =  FirebaseFirestore.getInstance();
+        String userId = user.getUid();
+
+
+
         if (name.isEmpty()) {
-            binding.nameInputLayout.setHelperText("사용할 수 없는 이름 입니다");
-            binding.nameInputLayout.setHelperTextEnabled(true);
+            binding.nameInputLayout.setError("이름이 비어있습니다");
             return;
         }
         else{
+            binding.nameInputLayout.setError(null);
             binding.nameInputLayout.setHelperText("사용할 수 있는 이름 입니다");
             binding.nameInputLayout.setHelperTextEnabled(true);
         }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            binding.emailInputLayout.setHelperText("사용할 수 없는 이메일 입니다");
-            binding.emailInputLayout.setHelperTextEnabled(true);
+            binding.emailInputLayout.setError("사용할 수 없는 이메일 입니다");
             return;
+        }else{
+            binding.emailInputLayout.setError(null);
         }
 
+        db.collection("users")
+                .whereEqualTo("email", email) // 이메일 필드 비교
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        binding.emailInputLayout.setError("중복된 이메일이 존재합니다");
+                        return;
+                    }
+                });
+
         if (password.isEmpty()) {
-            binding.passwordInputLayout2.setHelperText("비밀번호를 입력해 주세요");
-            binding.passwordInputLayout2.setHelperTextEnabled(true);
+            binding.passwordInputLayout.setError("비밀번호를 입력해주세요");
             return;
+        } else{
+            binding.passwordInputLayout.setError(null);
         }
 
         if (!password.equals(password2)) {
-            binding.passwordInputLayout2.setHelperText("비밀번호가 일치하지 않습니다");
-            binding.passwordInputLayout2.setHelperTextEnabled(true);
+            binding.passwordInputLayout2.setError("비밀번호가 일치하지 않습니다");
             return;
         }
         else{
+            binding.passwordInputLayout2.setError(null);
             binding.passwordInputLayout2.setHelperText("비밀번호가 일치합니다");
             binding.passwordInputLayout2.setHelperTextEnabled(true);
         }
@@ -123,13 +141,6 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-
-                            binding.emailInputLayout.setHelperText("사용할 수 있는 이메일 입니다");
-                            binding.emailInputLayout.setHelperTextEnabled(true);
-
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            db =  FirebaseFirestore.getInstance();
-                            String userId = user.getUid();
 
                             UserAccount userAccount = new UserAccount();
                             userAccount.setName(name);
@@ -146,8 +157,6 @@ public class RegisterActivity extends AppCompatActivity {
                                            overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
                                        }
                                     });
-                        } else {
-                            binding.emailInputLayout.setHelperText("중복된 이메일입니다");
                         }
                     }
                 });

@@ -36,9 +36,18 @@ public class LoginActivity extends AppCompatActivity {
             String email = binding.emailText.getText().toString().trim();
             String password = binding.passwordText.getText().toString().trim();
 
-            if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
-                Toast.makeText(this, "잘못된 값이 입력되었습니다", Toast.LENGTH_SHORT).show();
+            if (TextUtils.isEmpty(email) ) {
+                binding.emailLayout.setError("이메일을 입력해주세요");
                 return;
+            }else{
+                binding.emailLayout.setError(null);
+            }
+
+            if (TextUtils.isEmpty(password)) {
+                binding.passwordLayout.setError("비밀번호를 입력해주세요");
+                return;
+            }else{
+                binding.passwordLayout.setError(null);
             }
 
             mAuth.signInWithEmailAndPassword(email, password)
@@ -59,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
                             startActivity(intent);
 
                         } else {
-                            Toast.makeText(LoginActivity.this, "로그인 실패 : " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            binding.passwordLayout.setError("로그인 실패");
                         }
                     });
         });

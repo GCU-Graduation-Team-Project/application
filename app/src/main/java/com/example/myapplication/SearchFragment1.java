@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -17,11 +18,23 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.myapplication.databinding.SearchFragment1Binding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.List;
 
 public class SearchFragment1 extends Fragment {
     private SearchFragment1Binding binding;
     private OnBackPressedCallback main_callback;
     private SharedViewModel SharedViewModel;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
 
     @Nullable
     @Override
@@ -29,35 +42,57 @@ public class SearchFragment1 extends Fragment {
         binding = SearchFragment1Binding.inflate(inflater, container, false);
         View view = binding.getRoot();
         return view;
-
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        db =  FirebaseFirestore.getInstance();
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
         String userId = sharedPreferences.getString("userId", null);
 
-        SharedViewModel = new ViewModelProvider(requireActivity()).get(com.example.myapplication.SharedViewModel.class);
-        SharedViewModel.loadUserAccount(userId);
 
-        int selectedChipId = binding.ChipGroupId.getCheckedChipId();
+        final String[] question1Value = {""};
+        binding.ChipGroupId.setOnCheckedStateChangeListener(new ChipGroup.OnCheckedStateChangeListener(){
 
+            @Override
+            public void onCheckedChanged(@NonNull ChipGroup group, @NonNull List<Integer> checkedIds) {
+                if (!checkedIds.isEmpty()) {
+                    int selectedId = checkedIds.get(0);
+                    Chip selectedChip = group.findViewById(selectedId);
+                    question1Value[0] = selectedChip.getText().toString();
+                }
+            }
+        });
 
         binding.buttonNext.setOnClickListener(v -> {
-            Fragment nextFragment = new SearchFragment2();
-            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            db.collection("Users").document(userId)
+                    .update("question1", question1Value[0])
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
 
-            transaction.setCustomAnimations(
-                    R.anim.fade_in,
-                    R.anim.fade_out,
-                    R.anim.fade_in,
-                    R.anim.fade_out
-            );
+                            Fragment nextFragment = new SearchFragment2();
+                            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
 
-            transaction.replace(R.id.fragment_container, nextFragment);
-            transaction.commit();
+                            transaction.setCustomAnimations(
+                                    R.anim.fade_in,
+                                    R.anim.fade_out,
+                                    R.anim.fade_in,
+                                    R.anim.fade_out
+                            );
+
+                            transaction.replace(R.id.fragment_container, nextFragment);
+                            transaction.commit();
+
+                        }
+                    });
+
+
+
         });
 
 

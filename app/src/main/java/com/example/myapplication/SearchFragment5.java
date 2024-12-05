@@ -34,7 +34,7 @@ public class SearchFragment5 extends Fragment {
         binding.progressBar.setProgress(100);
 
         binding.buttonNext.setOnClickListener(v -> {
-            Fragment nextFragment = new SearchFragment2();
+            Fragment nextFragment = new SearchFragment6();
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
 
             transaction.setCustomAnimations(
