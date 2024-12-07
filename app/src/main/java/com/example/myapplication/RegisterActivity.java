@@ -157,11 +157,7 @@ public class RegisterActivity extends AppCompatActivity {
                             Date now = new Date();
 
 
-                            UserAccount userAccount = new UserAccount();
-
-                            userAccount.setName(name);
-                            userAccount.setId(userId);
-                            userAccount.setEmail(email);
+                            UserAccount userAccount = new UserAccount(userId,name,email,null,null,null,null,null);
                             userAccount.setTimestamp(now);
 
                             db.collection("Users").document(userId)

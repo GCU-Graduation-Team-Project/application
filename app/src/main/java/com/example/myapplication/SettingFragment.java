@@ -34,8 +34,10 @@ public class SettingFragment extends Fragment {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
         String userId = sharedPreferences.getString("userId", null);
         String name = sharedPreferences.getString("name", null);
-        binding.nameView.setText(name);
+        String email = sharedPreferences.getString("email", null);
 
+        binding.nameView.setText(name);
+        binding.emailView.setText(email);
     }
 
     @Override

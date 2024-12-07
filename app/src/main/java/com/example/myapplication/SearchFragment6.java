@@ -2,11 +2,13 @@ package com.example.myapplication;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Camera;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.myapplication.databinding.CameraFragmentBinding;
 import com.example.myapplication.databinding.SearchFragment6Binding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -50,28 +54,46 @@ public class SearchFragment6 extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         binding.progressBar.setProgress(100);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        String userId = sharedPreferences.getString("userId", null);
+        String name = sharedPreferences.getString("name", null);
+        String email = sharedPreferences.getString("email", null);
+        String question1 = sharedPreferences.getString("question1", null);
+        String question2 = sharedPreferences.getString("question2", null);
+        String question3 = sharedPreferences.getString("question3", null);
+        String question4 = sharedPreferences.getString("question4", null);
+        String pdf_url = null;
 
-        
-        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+        UserAccount userAccount = new UserAccount(userId, name, email, question1, question2, question3, question4, pdf_url);
 
-            @Override
-            public void run() {
+        db.collection("Users").document(userId)
+                .set(userAccount)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
 
-                Fragment nextFragment = new SearchFragment7();
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                            Fragment nextFragment = new SearchFragment7();
+                            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
 
-                transaction.setCustomAnimations(
-                        R.anim.fade_in,
-                        R.anim.fade_out,
-                        R.anim.fade_in,
-                        R.anim.fade_out
-                );
+                            transaction.setCustomAnimations(
+                                    R.anim.fade_in,
+                                    R.anim.fade_out,
+                                    R.anim.fade_in,
+                                    R.anim.fade_out
+                            );
 
-                transaction.replace(R.id.fragment_container, nextFragment);
-                transaction.commit();
-            }
-        }, 1000);
+                            transaction.replace(R.id.fragment_container, nextFragment);
+                            transaction.commit();
+
+                        } else {
+                            Log.e("Firestore", "Error adding document", task.getException());
+                        }
+                    }
+                });
+
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override

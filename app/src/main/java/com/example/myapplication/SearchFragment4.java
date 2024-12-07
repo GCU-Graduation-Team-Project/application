@@ -48,34 +48,28 @@ public class SearchFragment4 extends Fragment {
         FirebaseUser user = mAuth.getCurrentUser();
         db =  FirebaseFirestore.getInstance();
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         String userId = sharedPreferences.getString("userId", null);
 
 
         binding.buttonNext.setOnClickListener(v -> {
 
             String question4 = binding.question4.getText().toString().trim();
+            editor.putString("question4" , question4);
+            editor.apply();
 
-            db.collection("Questions").document(userId)
-                    .update("question4", question4)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
+            Fragment nextFragment = new SearchFragment5();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
 
-                            Fragment nextFragment = new SearchFragment5();
-                            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.setCustomAnimations(
+                    R.anim.fade_in,
+                    R.anim.fade_out,
+                    R.anim.fade_in,
+                    R.anim.fade_out
+            );
 
-                            transaction.setCustomAnimations(
-                                    R.anim.fade_in,
-                                    R.anim.fade_out,
-                                    R.anim.fade_in,
-                                    R.anim.fade_out
-                            );
-
-                            transaction.replace(R.id.fragment_container, nextFragment);
-                            transaction.commit();
-
-                        }
-                    });
+            transaction.replace(R.id.fragment_container, nextFragment);
+            transaction.commit();
 
 
 

@@ -26,7 +26,6 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -59,6 +58,7 @@ public class SearchFragment1 extends Fragment {
         db = FirebaseFirestore.getInstance();
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         String userId = sharedPreferences.getString("userId", null);
 
 
@@ -78,27 +78,22 @@ public class SearchFragment1 extends Fragment {
 
 
         binding.buttonNext.setOnClickListener(v -> {
-            db.collection("Users").document(userId)
-                    .update("question1", question1Value[0])
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
+            editor.putString("question1" , question1Value[0]);
+            editor.apply();
 
-                            Fragment nextFragment = new SearchFragment2();
-                            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            Fragment nextFragment = new SearchFragment2();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
 
-                            transaction.setCustomAnimations(
-                                    R.anim.fade_in,
-                                    R.anim.fade_out,
-                                    R.anim.fade_in,
-                                    R.anim.fade_out
-                            );
+            transaction.setCustomAnimations(
+                    R.anim.fade_in,
+                    R.anim.fade_out,
+                    R.anim.fade_in,
+                    R.anim.fade_out
+            );
 
-                            transaction.replace(R.id.fragment_container, nextFragment);
-                            transaction.commit();
+            transaction.replace(R.id.fragment_container, nextFragment);
+            transaction.commit();
 
-                        }
-                    });
         });
 
 

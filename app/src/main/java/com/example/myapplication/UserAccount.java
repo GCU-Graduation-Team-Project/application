@@ -16,7 +16,21 @@ public class UserAccount {
     @ServerTimestamp
     private Date timestamp;
 
-    public UserAccount() {}
+    public UserAccount() {
+    }
+
+
+
+    public UserAccount(String id, String name, String email, String question1, String question2, String question3, String question4, String pdf_url) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.question1 = question1;
+        this.question2 = question2;
+        this.question3 = question3;
+        this.question4 = question4;
+        this.pdf_url = pdf_url;
+    }
 
     public String getId() {
         return id;

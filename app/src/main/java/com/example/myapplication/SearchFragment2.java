@@ -50,8 +50,8 @@ public class SearchFragment2 extends Fragment {
         FirebaseUser user = mAuth.getCurrentUser();
         db =  FirebaseFirestore.getInstance();
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         String userId = sharedPreferences.getString("userId", null);
-
 
         final String[] question2Value = {""};
         binding.ChipGroupId.setOnCheckedStateChangeListener(new ChipGroup.OnCheckedStateChangeListener(){
@@ -67,28 +67,21 @@ public class SearchFragment2 extends Fragment {
         });
 
         binding.buttonNext.setOnClickListener(v -> {
-            db.collection("Users").document(userId)
-                    .update("question2", question2Value[0])
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
+            editor.putString("question2" , question2Value[0]);
+            editor.apply();
 
-                            Fragment nextFragment = new SearchFragment3();
-                            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            Fragment nextFragment = new SearchFragment3();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
 
-                            transaction.setCustomAnimations(
-                                    R.anim.fade_in,
-                                    R.anim.fade_out,
-                                    R.anim.fade_in,
-                                    R.anim.fade_out
-                            );
+            transaction.setCustomAnimations(
+                    R.anim.fade_in,
+                    R.anim.fade_out,
+                    R.anim.fade_in,
+                    R.anim.fade_out
+            );
 
-                            transaction.replace(R.id.fragment_container, nextFragment);
-                            transaction.commit();
-
-                        }
-                    });
-
+            transaction.replace(R.id.fragment_container, nextFragment);
+            transaction.commit();
 
 
         });
