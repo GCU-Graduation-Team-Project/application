@@ -1,6 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/kopub"
+        android:text="시작하기 전에"
+        android:gravity="center"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/horizon1"
+        app:layout_constraintEnd_toStartOf="@id/vertical2"
+        app:layout_constraintStart_toEndOf="@id/vertical1"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/camera_before"
+        app:layout_constraintBottom_toTopOf="@id/horizon2"
+        app:layout_constraintEnd_toStartOf="@id/vertical2"
+        app:layout_constraintStart_toEndOf="@id/vertical1"
+        app:layout_constraintTop_toBottomOf="@id/horizon1"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="카메라에 상반신이 온전히 보이도록\n화면을 조정해주세요!"
+        android:gravity="center"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@id/horizon3"
+        app:layout_constraintEnd_toStartOf="@id/vertical2"
+        app:layout_constraintStart_toEndOf="@id/vertical1"
+        app:layout_constraintTop_toBottomOf="@id/horizon2"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_next"
+        style="?attr/borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:backgroundTint="#006FFD"
+        android:text="next"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@id/horizon4"
+        app:layout_constraintEnd_toStartOf="@id/vertical2"
+        app:layout_constraintStart_toEndOf="@id/vertical1"
+        app:layout_constraintTop_toBottomOf="@id/horizon3" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="버튼을 눌러 시작"
+        android:textSize="15dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/horizon5"
+        app:layout_constraintEnd_toStartOf="@id/vertical2"
+        app:layout_constraintStart_toEndOf="@id/vertical1"
+        app:layout_constraintTop_toBottomOf="@id/horizon4"/>
+
+
+
+
+    <androidx.constraintlayout.widget.Guideline
+
+        android:id="@+id/vertical1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="16dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vertical2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="16dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizon1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.11" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizon2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.58" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizon3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.71" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizon4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.82" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizon5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.87" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizon6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="1" />
 </androidx.constraintlayout.widget.ConstraintLayout>

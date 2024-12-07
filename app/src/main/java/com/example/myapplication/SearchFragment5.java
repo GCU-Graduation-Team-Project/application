@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.myapplication.databinding.SearchFragment5Binding;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 
 public class SearchFragment5 extends Fragment {
     private SearchFragment5Binding binding;
@@ -47,6 +50,7 @@ public class SearchFragment5 extends Fragment {
             transaction.replace(R.id.fragment_container, nextFragment);
             transaction.commit();
         });
+
 
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
