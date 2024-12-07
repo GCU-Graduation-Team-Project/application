@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,10 +13,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.myapplication.databinding.LoginPageBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 public class LoginActivity extends AppCompatActivity {
     private LoginPageBinding binding;
@@ -57,12 +61,12 @@ public class LoginActivity extends AppCompatActivity {
                             FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
                             String userId = currentUser.getUid();
 
-                            SharedPreferences sharedPreferences = getSharedPreferences("UserData", MODE_PRIVATE);
+                            FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+                            SharedPreferences sharedPreferences = getSharedPreferences("UserData", Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
-
-                            editor.putString("userId", userId);
+                            editor.putString("userID", userId);
                             editor.apply();
-
 
                             Intent intent = new Intent(this, MainActivity.class);
                             startActivity(intent);

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,20 +20,25 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.myapplication.databinding.SearchFragment1Binding;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SearchFragment1 extends Fragment {
     private SearchFragment1Binding binding;
     private OnBackPressedCallback main_callback;
-    private SharedViewModel SharedViewModel;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
@@ -50,13 +56,15 @@ public class SearchFragment1 extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
-        db =  FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance();
+
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
         String userId = sharedPreferences.getString("userId", null);
 
 
         final String[] question1Value = {""};
-        binding.ChipGroupId.setOnCheckedStateChangeListener(new ChipGroup.OnCheckedStateChangeListener(){
+
+        binding.ChipGroupId.setOnCheckedStateChangeListener(new ChipGroup.OnCheckedStateChangeListener() {
 
             @Override
             public void onCheckedChanged(@NonNull ChipGroup group, @NonNull List<Integer> checkedIds) {
@@ -67,6 +75,7 @@ public class SearchFragment1 extends Fragment {
                 }
             }
         });
+
 
         binding.buttonNext.setOnClickListener(v -> {
             db.collection("Users").document(userId)
@@ -90,9 +99,6 @@ public class SearchFragment1 extends Fragment {
 
                         }
                     });
-
-
-
         });
 
 

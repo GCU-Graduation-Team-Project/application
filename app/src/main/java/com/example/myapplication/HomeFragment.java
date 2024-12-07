@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -33,7 +35,7 @@ public class HomeFragment extends Fragment {
 
     private HomeFragmentBinding binding;
     String name;
-    private SharedViewModel SharedViewModel;
+    private FirebaseFirestore db;
 
 
     @Nullable
@@ -48,18 +50,30 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        String uid = user.getUid();  // 첫 로그인 시 고유한 uid
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
-        String userId = sharedPreferences.getString("userId", null);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("userId", uid);  // 문자열 저장
 
 
-        SharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-        SharedViewModel.loadUserAccount(userId);
 
-        SharedViewModel.getUserAccount().observe(getViewLifecycleOwner(), account -> {
-            if (account != null) {
-                binding.nameView.setText(account.getName());
-            }
-        });
+        db.collection("Users").document(uid)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        String name = documentSnapshot.getString("name");
+                        if (name != null) {
+                            // name이 null이 아닐 때 nameView에 설정
+                            binding.nameView.setText(name);
+                            editor.putString("name", name);
+                            editor.apply();// 문자열 저장
+                        }
+                    }
+                });
 
     }
 

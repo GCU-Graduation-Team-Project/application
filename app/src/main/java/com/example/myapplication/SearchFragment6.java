@@ -1,12 +1,16 @@
 package com.example.myapplication;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.graphics.Camera;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -14,11 +18,24 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.myapplication.databinding.CameraFragmentBinding;
 import com.example.myapplication.databinding.SearchFragment6Binding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SearchFragment6 extends Fragment {
     private SearchFragment6Binding binding;
+    private QuestionBoxAdapter adapter;
+    private List<UserAccount> dataList;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
 
     @Nullable
     @Override
@@ -34,10 +51,13 @@ public class SearchFragment6 extends Fragment {
 
         binding.progressBar.setProgress(100);
 
+
+        
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
 
             @Override
             public void run() {
+
                 Fragment nextFragment = new SearchFragment7();
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
 

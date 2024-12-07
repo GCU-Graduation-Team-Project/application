@@ -55,7 +55,7 @@ public class SearchFragment4 extends Fragment {
 
             String question4 = binding.question4.getText().toString().trim();
 
-            db.collection("Users").document(userId)
+            db.collection("Questions").document(userId)
                     .update("question4", question4)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override

@@ -1,4 +1,7 @@
 package com.example.myapplication;
+import java.util.Date;
+
+import com.google.firebase.firestore.ServerTimestamp;
 
 public class UserAccount {
     private String id;
@@ -8,9 +11,12 @@ public class UserAccount {
     private String question2;
     private String question3;
     private String question4;
-    private String question5;
-    private String question6;
-    private String question7;
+    private String pdf_url;
+
+    @ServerTimestamp
+    private Date timestamp;
+
+    public UserAccount() {}
 
     public String getId() {
         return id;
@@ -65,6 +71,23 @@ public class UserAccount {
 
     public String getQuestion4() {
         return question4;
+    }
+
+
+    public String getPdfUrl() {
+        return pdf_url;
+    }
+
+    public void setPdfUrl(String pdf_url) {
+        this.pdf_url = pdf_url;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 
 

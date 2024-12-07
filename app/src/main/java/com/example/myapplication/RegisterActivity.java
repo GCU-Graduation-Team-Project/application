@@ -25,7 +25,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 public class RegisterActivity extends AppCompatActivity {
     private RegisterPageBinding binding;
@@ -86,9 +91,7 @@ public class RegisterActivity extends AppCompatActivity {
         String password2 = binding.passwordInput2.getText().toString().trim();
 
 
-        FirebaseUser user = mAuth.getCurrentUser();
         db =  FirebaseFirestore.getInstance();
-        String userId = user.getUid();
 
 
 
@@ -114,8 +117,15 @@ public class RegisterActivity extends AppCompatActivity {
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        binding.emailInputLayout.setError("중복된 이메일이 존재합니다");
-                        return;
+                        if (!task.getResult().isEmpty()) {
+                            // 중복된 이메일이 존재할 때
+                            binding.emailInputLayout.setError("중복된 이메일이 존재합니다");
+                        } else {
+                            // 중복된 이메일이 없을 때
+                            binding.emailInputLayout.setError(null);
+                            binding.passwordInputLayout2.setHelperText("사용할 수 있는 이메일 입니다");
+                            binding.passwordInputLayout2.setHelperTextEnabled(true);
+                        }
                     }
                 });
 
@@ -142,20 +152,31 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
 
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            String userId = user.getUid();
+                            Date now = new Date();
+
+
                             UserAccount userAccount = new UserAccount();
+
                             userAccount.setName(name);
                             userAccount.setId(userId);
                             userAccount.setEmail(email);
+                            userAccount.setTimestamp(now);
 
                             db.collection("Users").document(userId)
                                     .set(userAccount)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                       @Override
-                                       public void onComplete(@NonNull Task<Void> task) {
-                                           Intent intent = new Intent(RegisterActivity.this, RegisterSuccess.class);
-                                           startActivity(intent);
-                                           overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
-                                       }
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Intent intent = new Intent(RegisterActivity.this, RegisterSuccess.class);
+                                                startActivity(intent);
+                                                overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
+                                            } else {
+                                                Log.e("Firestore", "Error adding document", task.getException());
+                                            }
+                                        }
                                     });
                         }
                     }
