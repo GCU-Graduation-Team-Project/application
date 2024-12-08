@@ -1,4 +1,6 @@
 package com.example.myapplication;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 import com.google.firebase.firestore.ServerTimestamp;
@@ -11,17 +13,16 @@ public class UserAccount {
     private String question2;
     private String question3;
     private String question4;
-    private String pdf_url;
-
-    @ServerTimestamp
-    private Date timestamp;
+    private String pdf_uri;
+    String currentDate;
+    String currentTime;
 
     public UserAccount() {
     }
 
 
 
-    public UserAccount(String id, String name, String email, String question1, String question2, String question3, String question4, String pdf_url) {
+    public UserAccount(String id, String name, String email, String question1, String question2, String question3, String question4, String pdf_uri, String currentDate, String currentTime) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -29,7 +30,9 @@ public class UserAccount {
         this.question2 = question2;
         this.question3 = question3;
         this.question4 = question4;
-        this.pdf_url = pdf_url;
+        this.pdf_uri = pdf_uri;
+        this.currentDate = currentDate;
+        this.currentTime = currentTime;
     }
 
     public String getId() {
@@ -88,20 +91,28 @@ public class UserAccount {
     }
 
 
-    public String getPdfUrl() {
-        return pdf_url;
+    public String getPdfUri() {
+        return pdf_uri;
     }
 
-    public void setPdfUrl(String pdf_url) {
-        this.pdf_url = pdf_url;
+    public void setPdfUrl(String pdf_uri) {
+        this.pdf_uri = pdf_uri;
     }
 
-    public Date getTimestamp() {
-        return timestamp;
+    public String getCurrentDate() {
+        return currentDate;
     }
 
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
+    public void setCurrentDate(String currentDate) {
+        this.currentDate = currentDate;
+    }
+
+    public String getCurrentTime() {
+        return currentTime;
+    }
+
+    public void setCurrentTime(String currentTime) {
+        this.currentTime = currentTime;
     }
 
 

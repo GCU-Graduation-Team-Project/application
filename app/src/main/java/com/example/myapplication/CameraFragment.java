@@ -58,10 +58,10 @@ public class CameraFragment extends Fragment {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         db.collection("Users")
+                .whereEqualTo("id", userId)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful() && task.getResult() != null) {
-                        List<UserAccount> userAccounts = new ArrayList<>();
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             UserAccount userAccount = document.toObject(UserAccount.class);
                             if (userAccount != null) {
@@ -69,7 +69,7 @@ public class CameraFragment extends Fragment {
                             }
                         }
                         Log.d("FirestoreDebug", "Fetched data size: " + userAccounts.size());
-                        sharedViewModel.setUserAccounts(userAccounts); // ViewModel에 데이터 설정
+                        sharedViewModel.setUserAccounts(userAccounts);
                     } else {
                         Log.e("FirestoreError", "Error fetching data", task.getException());
                     }

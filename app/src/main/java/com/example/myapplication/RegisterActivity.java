@@ -154,11 +154,10 @@ public class RegisterActivity extends AppCompatActivity {
 
                             FirebaseUser user = mAuth.getCurrentUser();
                             String userId = user.getUid();
-                            Date now = new Date();
 
 
-                            UserAccount userAccount = new UserAccount(userId,name,email,null,null,null,null,null);
-                            userAccount.setTimestamp(now);
+                            UserAccount userAccount = new UserAccount(userId,name,email,null,null,null,null,null, null, null);
+
 
                             db.collection("Users").document(userId)
                                     .set(userAccount)

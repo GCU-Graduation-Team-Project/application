@@ -36,6 +36,40 @@ public class SearchFragment3 extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = SearchFragment3Binding.inflate(inflater, container, false);
         View view = binding.getRoot();
+
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+                builder.setMessage("정보가 저장되지 않습니다.\n처음화면으로 돌아가시겠습니까?");
+
+                Fragment firstFragment = new SearchFragment();
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+
+                builder.setNegativeButton("예", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        transaction.replace(R.id.fragment_container, firstFragment);
+                        transaction.commit();
+                    }
+                });
+
+                builder.setPositiveButton("아니오", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                builder.setCancelable(false);
+                builder.show();
+
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
+
         return view;
     }
 
@@ -74,38 +108,6 @@ public class SearchFragment3 extends Fragment {
 
         });
 
-
-        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-                builder.setMessage("정보가 저장되지 않습니다.\n처음화면으로 돌아가시겠습니까?");
-
-                Fragment firstFragment = new SearchFragment();
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-
-                builder.setNegativeButton("예", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        transaction.replace(R.id.fragment_container, firstFragment);
-                        transaction.commit();
-                    }
-                });
-
-                builder.setPositiveButton("아니오", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-
-                builder.setCancelable(false);
-                builder.show();
-
-            }
-        };
-        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
 
     }
     @Override

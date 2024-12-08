@@ -33,47 +33,7 @@ public class SearchFragment4 extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = SearchFragment4Binding.inflate(inflater, container, false);
         View view = binding.getRoot();
-        return view;
-    }
 
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        binding.progressBar.setProgress(75);
-
-
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
-        db =  FirebaseFirestore.getInstance();
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        String userId = sharedPreferences.getString("userId", null);
-
-
-        binding.buttonNext.setOnClickListener(v -> {
-
-            String question4 = binding.question4.getText().toString().trim();
-            editor.putString("question4" , question4);
-            editor.apply();
-
-            Fragment nextFragment = new SearchFragment5();
-            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-
-            transaction.setCustomAnimations(
-                    R.anim.fade_in,
-                    R.anim.fade_out,
-                    R.anim.fade_in,
-                    R.anim.fade_out
-            );
-
-            transaction.replace(R.id.fragment_container, nextFragment);
-            transaction.commit();
-
-
-
-        });
 
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
@@ -107,6 +67,51 @@ public class SearchFragment4 extends Fragment {
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
+
+
+        return view;
+    }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        binding.progressBar.setProgress(75);
+
+
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        db =  FirebaseFirestore.getInstance();
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        String userId = sharedPreferences.getString("userId", null);
+
+        binding.buttonNext.setOnClickListener(v -> {
+
+            String question4 = binding.question4.getText().toString().trim();
+            editor.putString("question4" , question4);
+            editor.apply();
+
+            Fragment nextFragment = new SearchFragment5();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+
+            transaction.setCustomAnimations(
+                    R.anim.fade_in,
+                    R.anim.fade_out,
+                    R.anim.fade_in,
+                    R.anim.fade_out
+            );
+
+            transaction.replace(R.id.fragment_container, nextFragment);
+            transaction.commit();
+
+
+
+        });
+
+
 
     }
     @Override

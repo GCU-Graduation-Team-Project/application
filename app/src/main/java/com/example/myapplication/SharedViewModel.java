@@ -19,12 +19,4 @@ public class SharedViewModel extends ViewModel {
     public void setUserAccounts(List<UserAccount> accounts) {
         userAccounts.setValue(accounts);
     }
-
-    public void addUserAccount(UserAccount account) {
-        List<UserAccount> currentList = userAccounts.getValue();
-        if (currentList != null) {
-            currentList.add(account);
-            userAccounts.setValue(currentList);
-        }
-    }
 }
