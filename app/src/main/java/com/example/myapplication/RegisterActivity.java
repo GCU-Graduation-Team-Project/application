@@ -113,7 +113,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         db.collection("users")
-                .whereEqualTo("email", email) // 이메일 필드 비교
+                .whereEqualTo("email", email)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -156,7 +156,8 @@ public class RegisterActivity extends AppCompatActivity {
                             String userId = user.getUid();
 
 
-                            UserAccount userAccount = new UserAccount(userId,name,email,null,null,null,null,null, null, null);
+                            UserAccount userAccount = new UserAccount();
+                            userAccount.setLoginUserAccount(userId,name,email);
 
 
                             db.collection("Users").document(userId)

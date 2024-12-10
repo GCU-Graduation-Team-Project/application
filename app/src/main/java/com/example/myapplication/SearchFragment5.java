@@ -105,7 +105,10 @@ public class SearchFragment5 extends Fragment {
                 Uri pdfUri = result.getData().getData();
 
                 if (pdfUri != null) {
-                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+                    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                    String uid = currentUser.getUid();
+
+                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences(uid, Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("pdfUri", pdfUri.toString()); // Uri를 문자열로 저장
                     editor.apply();

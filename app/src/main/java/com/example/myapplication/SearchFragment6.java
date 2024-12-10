@@ -103,8 +103,10 @@ public class SearchFragment6 extends Fragment {
 
         binding.progressBar.setProgress(100);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        String uid = currentUser.getUid();
 
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(uid, Context.MODE_PRIVATE);
         String userId = sharedPreferences.getString("userId", null);
         String name = sharedPreferences.getString("name", null);
         String email = sharedPreferences.getString("email", null);
@@ -113,6 +115,7 @@ public class SearchFragment6 extends Fragment {
         String question3 = sharedPreferences.getString("question3", null);
         String question4 = sharedPreferences.getString("question4", null);
         String pdf_uri = sharedPreferences.getString("pdfUri", null);
+
         LocalDate currentDate = LocalDate.now();
         LocalTime currentTime = LocalTime.now();
 
@@ -139,7 +142,7 @@ public class SearchFragment6 extends Fragment {
 
                 userAccount = new UserAccount(userId, name, email, question1, question2, question3, question4, downloadUrl, formattedDate, formattedTime);
 
-                db.collection("Users")
+                db.collection("Questions")
                         .add(userAccount) // 자동 랜덤 ID로 문서 생성
                         .addOnSuccessListener(documentReference -> {
                             Log.d("Firestore", "Document added with ID: " + documentReference.getId());

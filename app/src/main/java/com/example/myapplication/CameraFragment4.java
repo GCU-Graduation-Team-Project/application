@@ -10,16 +10,15 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.myapplication.databinding.CameraFragment2Binding;
-import com.example.myapplication.databinding.CameraFragmentBinding;
+import com.example.myapplication.databinding.CameraFragment4Binding;
 
-public class CameraFragment2 extends Fragment {
-    private CameraFragment2Binding binding;
+public class CameraFragment4 extends Fragment {
+    CameraFragment4Binding binding;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = CameraFragment2Binding.inflate(inflater, container, false);
+        binding = CameraFragment4Binding.inflate(inflater, container, false);
         View view = binding.getRoot();
         return view;
     }
@@ -29,7 +28,7 @@ public class CameraFragment2 extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         binding.buttonNext.setOnClickListener(v -> {
-            Fragment nextFragment = new CameraFragment3();
+            Fragment nextFragment = new CameraFragment();
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
 
             transaction.setCustomAnimations(
@@ -42,6 +41,5 @@ public class CameraFragment2 extends Fragment {
             transaction.replace(R.id.fragment_container, nextFragment);
             transaction.commit();
         });
-
     }
 }

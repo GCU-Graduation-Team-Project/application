@@ -61,10 +61,10 @@ public class LoginActivity extends AppCompatActivity {
                             FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
                             String userId = currentUser.getUid();
 
-                            SharedPreferences sharedPreferences = getSharedPreferences("UserData", Context.MODE_PRIVATE);
+                            SharedPreferences sharedPreferences = getSharedPreferences(userId, Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putString("email", email);
-                            editor.putString("userID", userId);
+                            editor.putString("userId", userId);
                             editor.apply();
 
                             Intent intent = new Intent(this, MainActivity.class);

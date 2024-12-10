@@ -1,9 +1,4 @@
 package com.example.myapplication;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Date;
-
-import com.google.firebase.firestore.ServerTimestamp;
 
 public class UserAccount {
     private String id;
@@ -14,13 +9,17 @@ public class UserAccount {
     private String question3;
     private String question4;
     private String pdf_uri;
-    String currentDate;
-    String currentTime;
+    private String currentDate;
+    private String currentTime;
 
     public UserAccount() {
     }
 
-
+    public void setLoginUserAccount(String id, String name, String email) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+    }
 
     public UserAccount(String id, String name, String email, String question1, String question2, String question3, String question4, String pdf_uri, String currentDate, String currentTime) {
         this.id = id;
@@ -95,7 +94,7 @@ public class UserAccount {
         return pdf_uri;
     }
 
-    public void setPdfUrl(String pdf_uri) {
+    public void setPdfUri(String pdf_uri) {
         this.pdf_uri = pdf_uri;
     }
 

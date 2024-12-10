@@ -1,10 +1,13 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.databinding.QuestionBoxBinding;
@@ -19,6 +22,7 @@ import java.util.List;
 
 public class QuestionBoxAdapter extends RecyclerView.Adapter<QuestionBoxAdapter.ViewHolder> {
     private List<UserAccount> accountList = new ArrayList<>();
+    private OnItemClickListener listener;
 
     public QuestionBoxAdapter(List<UserAccount> userAccounts) {
         this.accountList = userAccounts;
@@ -31,6 +35,15 @@ public class QuestionBoxAdapter extends RecyclerView.Adapter<QuestionBoxAdapter.
         return new ViewHolder(binding);
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(UserAccount data);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         UserAccount data = accountList.get(position);
@@ -39,7 +52,9 @@ public class QuestionBoxAdapter extends RecyclerView.Adapter<QuestionBoxAdapter.
         holder.binding.timeView.setText(data.getCurrentTime());
 
         holder.binding.selectButton.setOnClickListener(v -> {
-            sendDataToServer(data);
+            if (listener != null) {
+                listener.onItemClick(data);
+            }
         });
     }
 
@@ -70,35 +85,7 @@ public class QuestionBoxAdapter extends RecyclerView.Adapter<QuestionBoxAdapter.
         }
     }
 
-    private void sendDataToServer(UserAccount data) {
-        new Thread(() -> {
-            try {
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("question1", data.getQuestion1());
-                jsonObject.put("question2", data.getQuestion2());
-                jsonObject.put("question3", data.getQuestion3());
-                jsonObject.put("question4", data.getQuestion4());
-                jsonObject.put("pdf_url", data.getPdfUri());
 
-                URL url = new URL("https://yourserver.com/api/upload");
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("POST");
-                connection.setRequestProperty("Content-Type", "application/json");
-                connection.setDoOutput(true);
-
-                OutputStream os = connection.getOutputStream();
-                os.write(jsonObject.toString().getBytes("UTF-8"));
-                os.flush();
-                os.close();
-
-                int responseCode = connection.getResponseCode();
-                Log.d("ServerResponse", "Response Code: " + responseCode);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }).start();
-    }
 
 
 

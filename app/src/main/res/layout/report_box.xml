@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/summary_card"
+        android:id="@+id/report_box"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:checkable="true"
@@ -43,7 +43,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_regular"
                         android:lineSpacingExtra="6dp"
-                        android:text="보고서 1"
+                        android:text="보고서"
                         android:textSize="18dp"
                         android:textStyle="bold" />
 
@@ -55,6 +55,7 @@
                         android:textAppearance="?attr/textAppearanceTitleMedium"
                         android:textColor="#8696BB"
                         android:textSize="14dp" />
+
                 </LinearLayout>
 
             </LinearLayout>
