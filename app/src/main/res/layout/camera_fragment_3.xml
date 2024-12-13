@@ -4,15 +4,42 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="질문 : "
+        android:textSize="20dp"
+        android:gravity="center"
+        app:layout_constraintStart_toEndOf="@id/vertical1"
+        app:layout_constraintEnd_toStartOf="@id/vertical2"
+        app:layout_constraintTop_toBottomOf="@id/horizon1"
+        app:layout_constraintBottom_toTopOf="@id/horizon2"
+        />
+
     <androidx.camera.view.PreviewView
         android:id="@+id/previewView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintStart_toEndOf="@id/vertical1"
         app:layout_constraintEnd_toStartOf="@id/vertical2"
-        app:layout_constraintTop_toBottomOf="@id/horizon1"
-        app:layout_constraintBottom_toTopOf="@id/horizon2"
+        app:layout_constraintTop_toBottomOf="@id/horizon2"
+        app:layout_constraintBottom_toTopOf="@id/horizon3"
         />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/recordButton"
+        style="?attr/borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:backgroundTint="#006FFD"
+        android:text="녹화"
+        android:textColor="#FFFFFF"
+
+        app:layout_constraintBottom_toTopOf="@id/horizon4"
+        app:layout_constraintEnd_toStartOf="@id/vertical2"
+        app:layout_constraintStart_toEndOf="@id/vertical1"
+        app:layout_constraintTop_toBottomOf="@id/horizon3" />
 
 
     <androidx.constraintlayout.widget.Guideline
@@ -35,14 +62,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.11" />
+        app:layout_constraintGuide_percent="0.05" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/horizon2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.9" />
+        app:layout_constraintGuide_percent="0.12" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizon3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.81" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizon4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="1" />
+
 
 
 

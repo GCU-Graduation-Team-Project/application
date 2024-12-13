@@ -123,8 +123,8 @@ public class RegisterActivity extends AppCompatActivity {
                         } else {
                             // 중복된 이메일이 없을 때
                             binding.emailInputLayout.setError(null);
-                            binding.passwordInputLayout2.setHelperText("사용할 수 있는 이메일 입니다");
-                            binding.passwordInputLayout2.setHelperTextEnabled(true);
+                            binding.emailInputLayout.setHelperText("사용할 수 있는 이메일 입니다");
+                            binding.emailInputLayout.setHelperTextEnabled(true);
                         }
                     }
                 });
