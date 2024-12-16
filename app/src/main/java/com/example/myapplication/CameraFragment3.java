@@ -1,7 +1,12 @@
 package com.example.myapplication;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -28,42 +33,35 @@ import androidx.camera.video.VideoRecordEvent;
 import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.loader.content.CursorLoader;
 
 import com.example.myapplication.databinding.CameraFragment3Binding;
 import com.google.common.util.concurrent.ListenableFuture;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
 import android.Manifest;
+
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 
 public class CameraFragment3 extends Fragment {
     CameraFragment3Binding binding;
     private boolean isRecording = false;
     private Recording recording;
     private VideoCapture<Recorder> videoCapture;
-
-    // 필요한 권한 배열
-    private String[] REQUIRED_PERMISSIONS = new String[] {
-            Manifest.permission.CAMERA,
-            Manifest.permission.RECORD_AUDIO
-    };
-
-    private final ActivityResultLauncher<String[]> requestPermissionsLauncher =
-            registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(),
-                    permissions -> {
-                        boolean allGranted = true;
-                        for (Boolean isGranted : permissions.values()) {
-                            if (!isGranted) {
-                                allGranted = false;
-                                break;
-                            }
-                        }
-
-                        if (allGranted) {
-                            initializeCamera();
-                        } else {
-                            Toast.makeText(getContext(), "카메라와 오디오 권한이 필요합니다.", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
-
+    private FirebaseStorage storage;
+    private StorageReference storageRef;
+    private String videoUrl;
 
 
     @Nullable
@@ -91,6 +89,8 @@ public class CameraFragment3 extends Fragment {
 
         checkAndRequestPermissions();
 
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReference();
 
 
     }
@@ -112,7 +112,29 @@ public class CameraFragment3 extends Fragment {
         }
     }
 
+    // 필요한 권한 배열
+    private String[] REQUIRED_PERMISSIONS = new String[] {
+            Manifest.permission.CAMERA,
+            Manifest.permission.RECORD_AUDIO
+    };
 
+    private final ActivityResultLauncher<String[]> requestPermissionsLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(),
+                    permissions -> {
+                        boolean allGranted = true;
+                        for (Boolean isGranted : permissions.values()) {
+                            if (!isGranted) {
+                                allGranted = false;
+                                break;
+                            }
+                        }
+
+                        if (allGranted) {
+                            initializeCamera();
+                        } else {
+                            Toast.makeText(getContext(), "카메라와 오디오 권한이 필요합니다.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
 
     private void initializeCamera() {
@@ -153,12 +175,13 @@ public class CameraFragment3 extends Fragment {
         }, ContextCompat.getMainExecutor(requireContext()));
     }
 
+    @SuppressLint("MissingPermission")
     private void startRecording() {
         if (videoCapture == null) return;
 
-        String name = "Recording-" + System.currentTimeMillis() + ".mp4";
+        String fileName = "Recording-" + System.currentTimeMillis() + ".mp4";
         ContentValues contentValues = new ContentValues();
-        contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, name);
+        contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, fileName);
         contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "video/mp4");
 
         MediaStoreOutputOptions options = new MediaStoreOutputOptions.Builder(
@@ -176,10 +199,11 @@ public class CameraFragment3 extends Fragment {
                         binding.recordButton.setText("녹화 중지");
                     }
                     if (videoRecordEvent instanceof VideoRecordEvent.Finalize) {
+                        VideoRecordEvent.Finalize finalizeEvent = (VideoRecordEvent.Finalize) videoRecordEvent;
+
                         if (!((VideoRecordEvent.Finalize) videoRecordEvent).hasError()) {
-                            String msg = "Video capture succeeded: " +
-                                    ((VideoRecordEvent.Finalize) videoRecordEvent).getOutputResults().getOutputUri();
-                            Log.d("CameraFragment3", msg);
+                            Uri videoUri = finalizeEvent.getOutputResults().getOutputUri();
+                            uploadVideoToFirebase(videoUri, fileName);
                         } else {
                             recording.close();
                             recording = null;
@@ -198,6 +222,96 @@ public class CameraFragment3 extends Fragment {
         isRecording = false;
         binding.recordButton.setText("녹화 시작");
     }
+
+    private void uploadVideoToFirebase(Uri videoUri, String fileName) {
+        // Firebase Storage에 업로드할 경로 설정
+        StorageReference videoRef = storageRef.child("videos/" + fileName);
+
+        try {
+            // Uri에서 실제 파일 경로 가져오기
+            String realPath = getRealPathFromUri(videoUri);
+            File videoFile = new File(realPath);
+
+            // 업로드 시작
+            UploadTask uploadTask = videoRef.putFile(Uri.fromFile(videoFile));
+
+            // 업로드 상태 모니터링
+            uploadTask.addOnSuccessListener(taskSnapshot -> {
+                // 업로드 성공
+                videoRef.getDownloadUrl().addOnSuccessListener(downloadUri -> {
+                    videoUrl = downloadUri.toString();
+                    Log.d("Upload", "Upload success. URL: " + videoUrl);
+                    sendDataToServer();
+                });
+            }).addOnFailureListener(e -> {
+                // 업로드 실패
+                Log.e("Upload", "Upload failed", e);
+                Toast.makeText(requireContext(), "동영상 업로드 실패", Toast.LENGTH_SHORT).show();
+            });
+
+        } catch (Exception e) {
+            Log.e("Upload", "Error preparing upload", e);
+            Toast.makeText(requireContext(), "업로드 준비 중 오류 발생", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private String getRealPathFromUri(Uri contentUri) {
+        String[] proj = {MediaStore.Video.Media.DATA};
+        CursorLoader loader = new CursorLoader(requireContext(), contentUri, proj, null, null, null);
+        Cursor cursor = loader.loadInBackground();
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATA);
+        cursor.moveToFirst();
+        String result = cursor.getString(column_index);
+        cursor.close();
+        return result;
+    }
+
+    private void sendDataToServer() {
+        new Thread(() -> {
+            try {
+                String encodedVideoUri = URLEncoder.encode(videoUrl, "UTF-8");
+
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("videoPath", encodedVideoUri);
+
+                URL url = new URL("http://34.64.206.14:8000/process");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("POST");
+                connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+                connection.setDoOutput(true);
+
+                OutputStream os = connection.getOutputStream();
+                os.write(jsonObject.toString().getBytes("UTF-8"));
+                os.flush();
+                os.close();
+
+                Log.d("JSON Payload", jsonObject.toString());
+                int responseCode = connection.getResponseCode();
+
+                Log.d("ServerResponse", "Response Code: " + responseCode);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+
+        Fragment nextFragment = new CameraFragment4();
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+
+        transaction.setCustomAnimations(
+                R.anim.fade_in,
+                R.anim.fade_out,
+                R.anim.fade_in,
+                R.anim.fade_out
+        );
+
+        transaction.replace(R.id.fragment_container, nextFragment);
+        transaction.commit();
+
+    }
+
+
+
 
     @Override
     public void onDestroy() {

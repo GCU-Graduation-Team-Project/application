@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = getSharedPreferences(uid, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        String userId = sharedPreferences.getString("userID", null);
+        String userId = sharedPreferences.getString("userId", null);
 
 
         db.collection("Users").document(userId)

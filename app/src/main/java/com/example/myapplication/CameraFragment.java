@@ -128,7 +128,7 @@ public class CameraFragment extends Fragment {
                 jsonObject.put("question2", data.getQuestion2());
                 jsonObject.put("question3", data.getQuestion3());
                 jsonObject.put("question4", data.getQuestion4());
-                jsonObject.put("videoPath", "123");
+                jsonObject.put("videoPath", null);
                 jsonObject.put("timestamp", data.getCurrentDate());
 
                 URL url = new URL("http://34.64.206.14:8000/process");

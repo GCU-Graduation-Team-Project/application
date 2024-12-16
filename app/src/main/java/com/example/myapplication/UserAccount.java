@@ -9,6 +9,7 @@ public class UserAccount {
     private String question3;
     private String question4;
     private String pdf_uri;
+    private String video_uri;
     private String currentDate;
     private String currentTime;
 
@@ -96,6 +97,14 @@ public class UserAccount {
 
     public void setPdfUri(String pdf_uri) {
         this.pdf_uri = pdf_uri;
+    }
+
+    public String getVideoUri() {
+        return video_uri;
+    }
+
+    public void setVideoUri(String video_uri) {
+        this.pdf_uri = video_uri;
     }
 
     public String getCurrentDate() {
