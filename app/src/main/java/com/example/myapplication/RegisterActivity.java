@@ -31,6 +31,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
     private RegisterPageBinding binding;
@@ -155,13 +157,16 @@ public class RegisterActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             String userId = user.getUid();
 
+                            Map<String, Object> registerData = new HashMap<>();
 
-                            UserAccount userAccount = new UserAccount();
-                            userAccount.setLoginUserAccount(userId,name,email);
+                            registerData.put("id", userId);
+                            registerData.put("name", name);
+                            registerData.put("email", email);
+
 
 
                             db.collection("Users").document(userId)
-                                    .set(userAccount)
+                                    .set(registerData)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {

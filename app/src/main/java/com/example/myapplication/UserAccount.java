@@ -16,11 +16,6 @@ public class UserAccount {
     public UserAccount() {
     }
 
-    public void setLoginUserAccount(String id, String name, String email) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-    }
 
     public UserAccount(String id, String name, String email, String question1, String question2, String question3, String question4, String pdf_uri, String currentDate, String currentTime) {
         this.id = id;
