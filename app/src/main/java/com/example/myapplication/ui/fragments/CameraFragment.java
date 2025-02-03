@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.ui.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,14 +14,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myapplication.databinding.CameraFragmentBinding;
-import com.example.myapplication.databinding.QuestionBoxBinding;
+import com.example.myapplication.R;
+import com.example.myapplication.databinding.FragmentCameraBinding;
+import com.example.myapplication.model.SharedViewModel;
+import com.example.myapplication.model.UserAccount;
+import com.example.myapplication.util.QuestionBoxAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -36,15 +35,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CameraFragment extends Fragment {
-    private CameraFragmentBinding binding;
-    private QuestionBoxAdapter QuestionBoxAdapter;
+    private FragmentCameraBinding binding;
+    private com.example.myapplication.util.QuestionBoxAdapter QuestionBoxAdapter;
     private List<UserAccount> userAccounts = new ArrayList<>();
     private SharedViewModel sharedViewModel;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = CameraFragmentBinding.inflate(inflater, container, false);
+        binding = FragmentCameraBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
         return view;

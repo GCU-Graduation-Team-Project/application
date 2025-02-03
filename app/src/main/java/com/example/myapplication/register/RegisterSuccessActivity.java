@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.register;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,17 +7,18 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
-import com.example.myapplication.databinding.RegisterSuccessBinding;
+import com.example.myapplication.databinding.ActivityRegisterSuccessBinding;
+import com.example.myapplication.login.LoginActivity;
 
-public class RegisterSuccess extends AppCompatActivity {
+public class RegisterSuccessActivity extends AppCompatActivity {
 
-    private RegisterSuccessBinding binding;
+    private ActivityRegisterSuccessBinding binding;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = RegisterSuccessBinding.inflate(getLayoutInflater());
+        binding = ActivityRegisterSuccessBinding.inflate(getLayoutInflater());
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(binding.getRoot());
 

@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.ui.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,15 +10,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.myapplication.databinding.SearchFragment7Binding;
+import com.example.myapplication.R;
+import com.example.myapplication.databinding.FragmentSearchBinding;
 
-public class SearchFragment7 extends Fragment {
-    private SearchFragment7Binding binding;
+public class SearchFragment extends Fragment {
+    private FragmentSearchBinding binding;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = SearchFragment7Binding.inflate(inflater, container, false);
+        binding = FragmentSearchBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         return view;
     }
@@ -28,7 +29,7 @@ public class SearchFragment7 extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         binding.buttonNext.setOnClickListener(v -> {
-            Fragment nextFragment = new SearchFragment();
+            Fragment nextFragment = new SearchFragment1();
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
 
             transaction.setCustomAnimations(

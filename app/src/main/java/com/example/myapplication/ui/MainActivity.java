@@ -1,34 +1,29 @@
-package com.example.myapplication;
+package com.example.myapplication.ui;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.myapplication.R;
 import com.example.myapplication.databinding.ActivityMainBinding;
-import com.example.myapplication.databinding.CameraFragmentBinding;
+import com.example.myapplication.ui.fragments.CameraFragment;
+import com.example.myapplication.ui.fragments.HomeFragment;
+import com.example.myapplication.ui.fragments.SearchFragment;
+import com.example.myapplication.ui.fragments.SettingFragment;
+import com.example.myapplication.util.ExitCallback;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreSettings;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -87,35 +82,10 @@ public class MainActivity extends AppCompatActivity {
                     .commit();
         }
 
-        exit_callback = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                    builder.setMessage("앱을 종료하시겠습니까?");
-
-                    builder.setNegativeButton("예", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            finishAffinity();
-                            System.exit(0);
-                        }
-                    });
-
-                    builder.setPositiveButton("아니오", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-                    builder.setCancelable(false);
-                    builder.show();
-                }
-
-            }
-        };
-
-        getOnBackPressedDispatcher().addCallback(exit_callback);
+        // 액티비티 컨텍스트를 사용하여 ExitCallback 생성
+        OnBackPressedCallback exitCallback = new ExitCallback(this);
+        // Fragment의 라이프사이클에 맞게 콜백 등록
+        this.getOnBackPressedDispatcher().addCallback(this, exitCallback);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();

@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.util;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -6,38 +6,39 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.myapplication.databinding.ReportBoxBinding;
-import com.example.myapplication.databinding.QuestionBoxBinding;
+
+import com.example.myapplication.databinding.BoxQuestionBinding;
+import com.example.myapplication.model.UserAccount;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReportBoxAdapter extends RecyclerView.Adapter<ReportBoxAdapter.ViewHolder> {
+public class QuestionBoxAdapter extends RecyclerView.Adapter<QuestionBoxAdapter.ViewHolder> {
     private List<UserAccount> accountList = new ArrayList<>();
-    private ReportBoxAdapter.OnItemClickListener listener;
+    private OnItemClickListener listener;
 
-    public ReportBoxAdapter(List<UserAccount> userAccounts) {
+    public QuestionBoxAdapter(List<UserAccount> userAccounts) {
         this.accountList = userAccounts;
     }
 
     @NonNull
     @Override
-    public ReportBoxAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        QuestionBoxBinding binding = QuestionBoxBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new ReportBoxAdapter.ViewHolder(binding);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        BoxQuestionBinding binding = BoxQuestionBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new ViewHolder(binding);
     }
 
     public interface OnItemClickListener {
         void onItemClick(UserAccount data);
     }
 
-    public void setOnItemClickListener(ReportBoxAdapter.OnItemClickListener listener) {
+    public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }
 
 
     @Override
-    public void onBindViewHolder(@NonNull ReportBoxAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         UserAccount data = accountList.get(position);
         holder.binding.questionView.setText(data.getQuestion1() + " + " + data.getQuestion2());
         holder.binding.dateView.setText(data.getCurrentDate());
@@ -69,13 +70,16 @@ public class ReportBoxAdapter extends RecyclerView.Adapter<ReportBoxAdapter.View
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        QuestionBoxBinding binding;
+        BoxQuestionBinding binding;
 
-        public ViewHolder(@NonNull QuestionBoxBinding binding) {
+        public ViewHolder(@NonNull BoxQuestionBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
     }
+
+
+
 
 
 }

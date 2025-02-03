@@ -1,10 +1,8 @@
-package com.example.myapplication;
+package com.example.myapplication.model;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
-import com.example.myapplication.UserAccount;
 
 import java.util.ArrayList;
 import java.util.List;

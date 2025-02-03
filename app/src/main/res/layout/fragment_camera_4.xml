@@ -20,7 +20,7 @@
         android:layout_height="0dp"
         android:fontFamily="@font/nanum_square_neo"
         android:gravity="center"
-        android:text="질문 생성 완료!"
+        android:text="동영상 업로드 완료!"
         android:textSize="30dp"
         android:textStyle="bold"
 

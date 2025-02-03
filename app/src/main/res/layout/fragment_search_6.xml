@@ -5,46 +5,40 @@
     android:layout_height="match_parent">
 
 
-    <ImageView
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progress_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintBottom_toTopOf="@id/horizon1"
+        app:layout_constraintEnd_toStartOf="@id/vertical2"
+        app:layout_constraintStart_toEndOf="@id/vertical1"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:src="@drawable/successmark"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/nanum_square_neo"
+        android:text="AI질문 생성을 위해 \n카테고리를 업로드 하는 중입니다\n잠시만 기다려주세요"
+        android:textSize="26dp"
+        android:textStyle="bold"
+
         app:layout_constraintBottom_toTopOf="@id/horizon2"
         app:layout_constraintEnd_toStartOf="@id/vertical2"
         app:layout_constraintStart_toEndOf="@id/vertical1"
         app:layout_constraintTop_toBottomOf="@id/horizon1" />
 
 
-    <TextView
+    <ImageView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:fontFamily="@font/nanum_square_neo"
-        android:gravity="center"
-        android:text="보고서 생성 완료!"
-        android:textSize="30dp"
-        android:textStyle="bold"
-
+        android:src="@drawable/loading"
         app:layout_constraintBottom_toTopOf="@id/horizon3"
         app:layout_constraintEnd_toStartOf="@id/vertical2"
         app:layout_constraintStart_toEndOf="@id/vertical1"
         app:layout_constraintTop_toBottomOf="@id/horizon2" />
-
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_next"
-        style="?attr/borderlessButtonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:backgroundTint="#006FFD"
-        android:text="next"
-        android:textColor="#FFFFFF"
-
-        app:layout_constraintBottom_toTopOf="@id/horizon4"
-        app:layout_constraintEnd_toStartOf="@id/vertical2"
-        app:layout_constraintStart_toEndOf="@id/vertical1"
-        app:layout_constraintTop_toBottomOf="@id/horizon3" />
-
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/vertical1"
@@ -52,6 +46,15 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="16dp" />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/loading"
+        app:layout_constraintBottom_toTopOf="@id/horizon3"
+        app:layout_constraintEnd_toStartOf="@id/vertical2"
+        app:layout_constraintStart_toEndOf="@id/vertical1"
+        app:layout_constraintTop_toBottomOf="@id/horizon2" />
 
 
     <androidx.constraintlayout.widget.Guideline
@@ -66,25 +69,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.3" />
+        app:layout_constraintGuide_percent="0.03" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/horizon2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
-
+        app:layout_constraintGuide_percent="0.3" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/horizon3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.6" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/horizon4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.ui.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,15 +10,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.myapplication.databinding.CameraFragment4Binding;
+import com.example.myapplication.R;
+import com.example.myapplication.databinding.FragmentCamera4Binding;
 
 public class CameraFragment4 extends Fragment {
-    CameraFragment4Binding binding;
+    FragmentCamera4Binding binding;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = CameraFragment4Binding.inflate(inflater, container, false);
+        binding = FragmentCamera4Binding.inflate(inflater, container, false);
         View view = binding.getRoot();
         return view;
     }

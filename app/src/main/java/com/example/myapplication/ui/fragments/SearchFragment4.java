@@ -1,29 +1,26 @@
-package com.example.myapplication;
+package com.example.myapplication.ui.fragments;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.myapplication.databinding.SearchFragment4Binding;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.example.myapplication.R;
+import com.example.myapplication.databinding.FragmentSearch4Binding;
+import com.example.myapplication.util.BaseCallback;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SearchFragment4 extends Fragment {
-    private SearchFragment4Binding binding;
+    private FragmentSearch4Binding binding;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
@@ -31,42 +28,14 @@ public class SearchFragment4 extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = SearchFragment4Binding.inflate(inflater, container, false);
+        binding = FragmentSearch4Binding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
+        // BaseCallback 생성
+        BaseCallback baseCallback = new BaseCallback(requireActivity());
+        // callback 등록
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), baseCallback);
 
-
-        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-                builder.setMessage("정보가 저장되지 않습니다.\n처음화면으로 돌아가시겠습니까?");
-
-                Fragment firstFragment = new SearchFragment();
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-
-                builder.setNegativeButton("예", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        transaction.replace(R.id.fragment_container, firstFragment);
-                        transaction.commit();
-                    }
-                });
-
-                builder.setPositiveButton("아니오", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-
-                builder.setCancelable(false);
-                builder.show();
-
-            }
-        };
-        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
 
 
         return view;

@@ -1,9 +1,8 @@
-package com.example.myapplication;
+package com.example.myapplication.ui.fragments;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -36,15 +35,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.loader.content.CursorLoader;
 
-import com.example.myapplication.databinding.CameraFragment3Binding;
+import com.example.myapplication.R;
+import com.example.myapplication.databinding.FragmentCamera3Binding;
 import com.google.common.util.concurrent.ListenableFuture;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
-import android.Manifest;
 
 import org.json.JSONObject;
 
@@ -55,7 +51,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 public class CameraFragment3 extends Fragment {
-    CameraFragment3Binding binding;
+    FragmentCamera3Binding binding;
     private boolean isRecording = false;
     private Recording recording;
     private VideoCapture<Recorder> videoCapture;
@@ -67,7 +63,7 @@ public class CameraFragment3 extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = CameraFragment3Binding.inflate(inflater, container, false);
+        binding = FragmentCamera3Binding.inflate(inflater, container, false);
         View view = binding.getRoot();
         return view;
     }
