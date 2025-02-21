@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.fragments;
+package com.example.myapplication.ui.fragments.SearchFragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;

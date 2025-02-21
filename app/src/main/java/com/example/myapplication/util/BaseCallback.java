@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.myapplication.R;
-import com.example.myapplication.ui.fragments.SearchFragment;
+import com.example.myapplication.ui.fragments.SearchFragment.SearchFragment;
 
 
 

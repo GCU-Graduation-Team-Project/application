@@ -26,21 +26,31 @@ public class RegisterActivity extends AppCompatActivity {
         binding = ActivityResgisterPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-
-
+        //Firebase 설정
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+        
+        //RegisterUserService 인스턴스 생성
         registrationService = new RegisterUserService(mAuth, db);
 
+
+        //OnClickListener 설정
         binding.registerButton.setOnClickListener(v -> {
+
+            //입력 값 초기화
             String name = binding.nameInput.getText().toString().trim();
             String email = binding.emailInput.getText().toString().trim();
             String password = binding.passwordInput.getText().toString().trim();
             String passwordConfirm = binding.passwordInput2.getText().toString().trim();
 
+
+            //registerUser 함수 실행
             registrationService.registerUser(name, email, password, passwordConfirm, new RegisterUserService.RegistrationCallback() {
                 @Override
                 public void onSuccess() {
+                    // 회원가입 후 자동 로그인된 상태를 해제하기 위해 로그아웃 처리
+                    mAuth.signOut();
+
                     // 회원가입 성공 시 다음 액티비티로 전환
                     Intent intent = new Intent(RegisterActivity.this, RegisterSuccessActivity.class);
                     startActivity(intent);

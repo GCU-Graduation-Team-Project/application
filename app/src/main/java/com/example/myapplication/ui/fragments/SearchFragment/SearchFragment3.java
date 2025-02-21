@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.fragments;
+package com.example.myapplication.ui.fragments.SearchFragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -7,40 +7,35 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.myapplication.R;
-import com.example.myapplication.databinding.FragmentSearch1Binding;
+import com.example.myapplication.databinding.FragmentSearch3Binding;
 import com.example.myapplication.util.BaseCallback;
-import com.google.android.material.chip.Chip;
-import com.google.android.material.chip.ChipGroup;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.List;
-
-public class SearchFragment1 extends Fragment {
-    private FragmentSearch1Binding binding;
-    private OnBackPressedCallback main_callback;
+public class SearchFragment3 extends Fragment {
+    private FragmentSearch3Binding binding;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentSearch1Binding.inflate(inflater, container, false);
+        binding = FragmentSearch3Binding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
 
         // BaseCallback 생성
-        BaseCallback  baseCallback = new BaseCallback(requireActivity());
+        BaseCallback baseCallback = new BaseCallback(requireActivity());
         // callback 등록
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), baseCallback);
+
 
         return view;
     }
@@ -49,9 +44,11 @@ public class SearchFragment1 extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        binding.progressBar.setProgress(50);
+
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
-        db = FirebaseFirestore.getInstance();
+        db =  FirebaseFirestore.getInstance();
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         String uid = currentUser.getUid();
 
@@ -60,26 +57,13 @@ public class SearchFragment1 extends Fragment {
         String userId = sharedPreferences.getString("userId", null);
 
 
-        final String[] question1Value = {""};
-
-        binding.ChipGroupId.setOnCheckedStateChangeListener(new ChipGroup.OnCheckedStateChangeListener() {
-
-            @Override
-            public void onCheckedChanged(@NonNull ChipGroup group, @NonNull List<Integer> checkedIds) {
-                if (!checkedIds.isEmpty()) {
-                    int selectedId = checkedIds.get(0);
-                    Chip selectedChip = group.findViewById(selectedId);
-                    question1Value[0] = selectedChip.getText().toString();
-                }
-            }
-        });
-
-
         binding.buttonNext.setOnClickListener(v -> {
-            editor.putString("question1" , question1Value[0]);
+
+            String question3 = binding.question3.getText().toString().trim();
+            editor.putString("question3" , question3);
             editor.apply();
 
-            Fragment nextFragment = new SearchFragment2();
+            Fragment nextFragment = new SearchFragment4();
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
 
             transaction.setCustomAnimations(
@@ -93,8 +77,9 @@ public class SearchFragment1 extends Fragment {
             transaction.commit();
 
         });
-    }
 
+
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();

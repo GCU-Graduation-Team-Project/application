@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.fragments;
+package com.example.myapplication.ui.fragments.CameraFragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -16,8 +16,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.myapplication.R;
+import com.example.myapplication.data.SharedViewModel;
 import com.example.myapplication.databinding.FragmentCameraBinding;
-import com.example.myapplication.model.SharedViewModel;
 import com.example.myapplication.model.UserAccount;
 import com.example.myapplication.util.QuestionBoxAdapter;
 import com.google.firebase.auth.FirebaseAuth;

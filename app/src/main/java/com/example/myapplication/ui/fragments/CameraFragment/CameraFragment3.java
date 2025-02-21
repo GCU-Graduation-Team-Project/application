@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.fragments;
+package com.example.myapplication.ui.fragments.CameraFragment;
 
 import android.Manifest;
 import android.annotation.SuppressLint;

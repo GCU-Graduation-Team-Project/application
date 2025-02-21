@@ -1,8 +1,7 @@
-package com.example.myapplication.ui.fragments;
+package com.example.myapplication.ui.fragments.HomeFragment;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,18 +9,15 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 
+import com.example.myapplication.data.SharedRepository;
 import com.example.myapplication.databinding.FragmentHomeBinding;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.example.myapplication.model.User;
 
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
-    String name;
-    private FirebaseFirestore db;
-
 
     @Nullable
     @Override
@@ -35,14 +31,15 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        String uid = currentUser.getUid();
+        Log.d("ViewCreated", "HomeFragment");
 
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(uid, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        name = sharedPreferences.getString("name", "");
-
-        binding.nameView.setText(name);
+        SharedRepository.getInstance().getUserLiveData().observe(getViewLifecycleOwner(), new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                String name = user.getName();
+                binding.nameView.setText(name);
+            }
+        });
 
     }
 

@@ -1,4 +1,4 @@
-package com.example.myapplication.util;
+package com.example.myapplication.register;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -6,10 +6,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UserRepository {
+public class RegisterUserRepository {
     private final FirebaseFirestore db;
 
-    public UserRepository(FirebaseFirestore db) {
+    public RegisterUserRepository(FirebaseFirestore db) {
         this.db = db;
     }
 
@@ -21,7 +21,7 @@ public class UserRepository {
 
 
     public Task<Boolean> isEmailRegistered(String email) {
-        return db.collection("users")  // 컬렉션 이름은 실제 사용하는 이름으로 수정하세요.
+        return db.collection("Users")
                 .whereEqualTo("email", email)
                 .get()
                 .continueWith(task -> {
@@ -46,7 +46,7 @@ public class UserRepository {
         userData.put("id", userId);
         userData.put("name", name);
         userData.put("email", email);
-        return db.collection("Users")  // 컬렉션 이름은 실제 사용하는 이름으로 수정하세요.
+        return db.collection("Users")
                 .document(userId)
                 .set(userData);
     }

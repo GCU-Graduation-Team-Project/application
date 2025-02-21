@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.fragments;
+package com.example.myapplication.ui.fragments.CameraFragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,15 +11,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.myapplication.R;
-import com.example.myapplication.databinding.FragmentSearch7Binding;
+import com.example.myapplication.databinding.FragmentCamera4Binding;
 
-public class SearchFragment7 extends Fragment {
-    private FragmentSearch7Binding binding;
+public class CameraFragment4 extends Fragment {
+    FragmentCamera4Binding binding;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentSearch7Binding.inflate(inflater, container, false);
+        binding = FragmentCamera4Binding.inflate(inflater, container, false);
         View view = binding.getRoot();
         return view;
     }
@@ -29,7 +29,7 @@ public class SearchFragment7 extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         binding.buttonNext.setOnClickListener(v -> {
-            Fragment nextFragment = new SearchFragment();
+            Fragment nextFragment = new CameraFragment();
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
 
             transaction.setCustomAnimations(
@@ -42,11 +42,5 @@ public class SearchFragment7 extends Fragment {
             transaction.replace(R.id.fragment_container, nextFragment);
             transaction.commit();
         });
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
     }
 }

@@ -20,8 +20,7 @@ public class StartActivity extends AppCompatActivity {
         // binding 설정
         binding = ActivityStartPageBinding.inflate(getLayoutInflater());
 
-
-        // 다크모드 설정
+        // 다크모드 비활성화
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         // 액티비티 화면 띄우기
