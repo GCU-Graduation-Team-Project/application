@@ -1,4 +1,4 @@
-package com.example.firebasegooglelogin;
+package com.example.myapplication.auth.login;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -20,8 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.example.myapplication.data.repository.FirestoreUserRepository;
 
 /**
  *
@@ -39,6 +38,7 @@ public class GoogleLogin {
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseFirestore mFirestore;
+    private FirestoreUserRepository firestoreUserRepository;
 
     /**
      * 생성자
@@ -53,6 +53,7 @@ public class GoogleLogin {
         this.mActivity = activity;
         this.mAuth = FirebaseAuth.getInstance();
         this.mFirestore = FirebaseFirestore.getInstance();
+        this.firestoreUserRepository = new FirestoreUserRepository(mAuth, mFirestore, activity);
 
         // Google Sign-In 옵션 설정
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -92,6 +93,7 @@ public class GoogleLogin {
         }
     }
 
+
     /**
      * 구글 ID 토큰으로 Firebase 인증을 진행하고,
      * 인증 성공 시 Firestore에 사용자 정보를 저장합니다.
@@ -106,33 +108,12 @@ public class GoogleLogin {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            if (user != null) {
-
-                                // Firestore에 사용자 정보 저장
-                                Map<String, Object> userData = new HashMap<>();
-                                userData.put("email", user.getEmail());
-                                userData.put("name", user.getDisplayName());
-                                userData.put("id", user.getUid());
-
-                                mFirestore.collection("Users")
-                                        .document(user.getUid())
-                                        .set(userData)
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> firestoreTask) {
-                                                if (firestoreTask.isSuccessful()) {
-                                                    Toast.makeText(mActivity, "FireStore 저장 성공: " + user.getEmail(), Toast.LENGTH_SHORT).show();
-                                                } else {
-                                                    Toast.makeText(mActivity, "Firestore 저장 실패", Toast.LENGTH_SHORT).show();
-                                                }
-                                            }
-                                        });
-                            }
+                            firestoreUserRepository.setUserDataToFireStore();
                         } else {
                             Toast.makeText(mActivity, "Firebase 인증 실패", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
+
 }

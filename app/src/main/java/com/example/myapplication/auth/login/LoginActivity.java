@@ -1,4 +1,4 @@
-package com.example.myapplication.login;
+package com.example.myapplication.auth.login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,8 +12,8 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.ActivityLoginBinding;
-import com.example.myapplication.register.RegisterActivity;
-import com.example.myapplication.ui.MainActivity;
+import com.example.myapplication.auth.register.RegisterActivity;
+import com.example.myapplication.ui.activity.MainActivity;
 import com.example.myapplication.util.ExitCallback;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -22,7 +22,7 @@ public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
     private FirebaseAuth mAuth;
     private LoginAuthenticator authenticator;
-    private com.example.firebasegooglelogin.GoogleLogin googleSignInHelper;
+    private GoogleLogin googleSignInHelper;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,16 +40,18 @@ public class LoginActivity extends AppCompatActivity {
         //LoginUserAuthenticator 인스턴스 생성
         authenticator = new LoginAuthenticator(mAuth);
 
-//        // 현재 사용자가 이미 로그인 되어 있는지 확인
-//        if (mAuth.getCurrentUser() != null) {
-//
-//            // 로그인된 상태 라면, 로그인 화면을 건너 뛰고 메인 액티비티로 이동
-//            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//            startActivity(intent);
-//
-//            // 로그인 액티비티 종료
-//            finish();
-//        }
+        // 현재 사용자가 이미 로그인 되어 있는지 확인
+        if (mAuth.getCurrentUser() != null) {
+            // 자동 로그인 시 사용자 데이터 가져오기
+            authenticator.getUserDataFromFireStore();
+            
+            // 로그인된 상태라면, 로그인 화면을 건너 뛰고 메인 액티비티로 이동
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+
+            // 로그인 액티비티 종료
+            finish();
+        }
 
         binding.loginButton.setOnClickListener(v -> {
             String email = binding.emailText.getText().toString().trim();
@@ -66,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
-        googleSignInHelper = new com.example.firebasegooglelogin.GoogleLogin(this, getString(R.string.default_web_client_id));
+        googleSignInHelper = new GoogleLogin(this, getString(R.string.default_web_client_id));
         binding.googleSignInButton.setOnClickListener(v -> googleSignInHelper.startSignIn());
 
         // ExitCallback 생성

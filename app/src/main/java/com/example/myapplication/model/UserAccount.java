@@ -99,7 +99,7 @@ public class UserAccount {
     }
 
     public void setVideoUri(String video_uri) {
-        this.pdf_uri = video_uri;
+        this.video_uri = video_uri;
     }
 
     public String getCurrentDate() {

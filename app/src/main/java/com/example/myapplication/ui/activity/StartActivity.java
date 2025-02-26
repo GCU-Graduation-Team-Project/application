@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,8 +7,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import com.example.myapplication.R;
 import com.example.myapplication.databinding.ActivityStartPageBinding;
-import com.example.myapplication.login.LoginActivity;
+import com.example.myapplication.auth.login.LoginActivity;
 import com.google.firebase.FirebaseApp;
 
 public class StartActivity extends AppCompatActivity {

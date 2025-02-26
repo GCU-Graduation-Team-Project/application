@@ -1,4 +1,4 @@
-package com.example.myapplication.data;
+package com.example.myapplication.data; 
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

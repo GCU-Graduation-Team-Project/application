@@ -1,4 +1,4 @@
-package com.example.myapplication.register;
+package com.example.myapplication.auth.register;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import com.example.myapplication.R;
 import com.example.myapplication.databinding.ActivityResgisterPageBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.example.myapplication.auth.register.RegisterSuccessActivity;
+import com.example.myapplication.auth.register.RegisterUserService;
 
 public class RegisterActivity extends AppCompatActivity {
     private ActivityResgisterPageBinding binding;

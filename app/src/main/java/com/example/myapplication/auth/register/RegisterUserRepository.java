@@ -1,4 +1,4 @@
-package com.example.myapplication.register;
+package com.example.myapplication.auth.register;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;

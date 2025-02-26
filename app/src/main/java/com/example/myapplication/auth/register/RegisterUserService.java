@@ -1,9 +1,10 @@
-package com.example.myapplication.register;
+package com.example.myapplication.auth.register;
 
 import com.example.myapplication.util.UserInputValidator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.example.myapplication.auth.register.RegisterUserRepository;
 
 public class RegisterUserService {
     private final FirebaseAuth auth;
